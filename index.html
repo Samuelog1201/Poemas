@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Poemas que Respiran</title>
+  <link rel="stylesheet" href="styles/style.css">
+</head>
+
+<body>
+
+  <div id="dynamicBg" class="dynamic-background"></div>
+
+  <!-- HOME -->
+  <section id="homeScreen" class="screen">
+    <div class="inner">
+      <h1>Poemas que Respiran</h1>
+      <p class="subtitle">
+        Dispositivo artístico interactivo que traduce poemas clásicos en experiencias visuales.
+        El usuario modifica la atmósfera del poema con sus gestos en la pantalla.
+      </p>
+
+      <p>
+        Esta app explora la translación intersemiótica: del lenguaje poético al sistema visual táctil basado en color y ritmo.
+      </p>
+
+      <div class="section-label">Selecciona un poema</div>
+
+      <div class="cards">
+
+        <div class="card" data-poem-id="becquer">
+          <div class="thumb thumb-becquer"></div>
+          <div>
+            <div class="card-title">Rima XXI</div>
+            <div class="card-author">Gustavo Adolfo Bécquer</div>
+            <div class="card-emotions">Amor, intimidad, revelación</div>
+          </div>
+        </div>
+
+        <div class="card" data-poem-id="marti">
+          <div class="thumb thumb-marti"></div>
+          <div>
+            <div class="card-title">Yo soy un hombre sincero</div>
+            <div class="card-author">José Martí</div>
+            <div class="card-emotions">Identidad, honestidad, raíz</div>
+          </div>
+        </div>
+
+        <div class="card" data-poem-id="dario">
+          <div class="thumb thumb-dario"></div>
+          <div>
+            <div class="card-title">Sonatina</div>
+            <div class="card-author">Rubén Darío</div>
+            <div class="card-emotions">Melancolía, belleza, fantasía</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- POEMA -->
+  <section id="poemaScreen" class="screen">
+    <div class="inner">
+
+      <button id="backBtn" class="back-btn">← Volver</button>
+
+      <h2 id="poemTitle"></h2>
+      <p class="poem-meta" id="poemMeta"></p>
+
+      <div class="poem-wrapper">
+        <div class="poem-text" id="poemText"></div>
+      </div>
+
+      <p class="hint">Interacción: toca o desliza para cambiar la atmósfera visual del poema.</p>
+
+    </div>
+  </section>
+
+  <script src="scripts/app.js"></script>
+</body>
+</html>
