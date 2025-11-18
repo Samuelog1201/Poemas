@@ -1,4 +1,6 @@
-// 1. Poemas y paletas
+/***************************************
+ * 1. BASE DE DATOS DE POEMAS
+ ***************************************/
 const poemas = {
   becquer: {
     titulo: "Rima XXI",
@@ -96,7 +98,10 @@ o perderse en el viento sobre el trueno del mar!`,
   }
 };
 
-// 2. Referencias al DOM
+
+/***************************************
+ * 2. REFERENCIAS AL DOM
+ ***************************************/
 const home = document.getElementById("homeScreen");
 const poemaScreen = document.getElementById("poemaScreen");
 const dynamicBg = document.getElementById("dynamicBg");
@@ -109,7 +114,10 @@ const backBtn = document.getElementById("backBtn");
 
 let poemaActual = null;
 
-// 3. Navegación
+
+/***************************************
+ * 3. NAVEGACIÓN ENTRE PANTALLAS
+ ***************************************/
 document.querySelectorAll(".card").forEach(card => {
   card.addEventListener("click", () => {
     abrirPoema(card.getAttribute("data-poem-id"));
@@ -124,9 +132,9 @@ function abrirPoema(id) {
 
   poemaActual = data;
 
-  poemTitle.textContent = poemaActual.titulo;
-  poemMeta.textContent = `${poemaActual.autor} · ${poemaActual.emociones}`;
-  poemText.textContent = poemaActual.texto;
+  poemTitle.textContent = data.titulo;
+  poemMeta.textContent = `${data.autor} · ${data.emociones}`;
+  poemText.textContent = data.texto;
 
   home.style.display = "none";
   poemaScreen.style.display = "block";
@@ -141,7 +149,10 @@ function volverHome() {
   dynamicBg.style.background = "transparent";
 }
 
-// 4. Fondo dinámico
+
+/***************************************
+ * 4. ACTUALIZACIÓN LOCAL DEL FONDO
+ ***************************************/
 function actualizarFondo(relX, relY) {
   if (!poemaActual) return;
 
@@ -153,7 +164,20 @@ function actualizarFondo(relX, relY) {
     `radial-gradient(circle at ${relX * 100}% ${relY * 100}%, ${paleta[i2]}, ${paleta[i1]} 60%)`;
 }
 
-// 5. Eventos táctiles globales
+
+/***************************************
+ * 5. ENVÍO A FIREBASE (TIEMPO REAL)
+ ***************************************/
+function enviarAFirebase(relX, relY) {
+  if (!window.roomRef) return;
+
+  set(window.roomRef, { x: relX, y: relY });
+}
+
+
+/***************************************
+ * 6. EVENTOS TÁCTILES Y CLICK
+ ***************************************/
 document.addEventListener("touchstart", e => {
   if (!poemaActual) return;
   const t = e.touches[0];
@@ -166,7 +190,6 @@ document.addEventListener("touchmove", e => {
   manejarInteraccion(t.clientX, t.clientY);
 });
 
-// Click para PC
 document.addEventListener("click", e => {
   if (!poemaActual) return;
   manejarInteraccion(e.clientX, e.clientY);
@@ -175,5 +198,23 @@ document.addEventListener("click", e => {
 function manejarInteraccion(x, y) {
   const relX = x / window.innerWidth;
   const relY = y / window.innerHeight;
+
   actualizarFondo(relX, relY);
+  enviarAFirebase(relX, relY);
+}
+
+
+/***************************************
+ * 7. RECEPCIÓN DESDE FIREBASE (REALTIME)
+ ***************************************/
+if (window.roomRef) {
+  onValue(window.roomRef, snapshot => {
+    const data = snapshot.val();
+    if (!data) return;
+
+    // Solo actualizar si estamos dentro del poema
+    if (poemaActual) {
+      actualizarFondo(data.x, data.y);
+    }
+  });
 }
