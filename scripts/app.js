@@ -51,11 +51,6 @@ function actualizarFondo(relX, relY) {
     `radial-gradient(circle at ${relX * 100}% ${relY * 100}%, ${paleta[i2]}, ${paleta[i1]} 60%)`;
 }
 
-// Prevenir scroll/pull-to-refresh
-document.addEventListener("touchmove", e => {
-  if (poemaActual) e.preventDefault();
-}, { passive: false });
-
 // Eventos táctiles globales
 document.addEventListener("touchstart", e => {
   if (!poemaActual) return;
