@@ -3,12 +3,11 @@ html, body {
   overscroll-behavior: none;
   margin: 0;
   padding: 0;
-  touch-action: none;
 }
 
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI";
-  background: transparent; 
+  background: transparent; /* antes #050608 — tapaba el fondo */
   color: #ffffff;
 }
 
