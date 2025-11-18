@@ -17,12 +17,9 @@
       <h1>Poemas que Respiran</h1>
       <p class="subtitle">
         Dispositivo artístico interactivo que traduce poemas clásicos en experiencias visuales.
-        El usuario modifica la atmósfera del poema con sus gestos en la pantalla.
       </p>
 
-      <p>
-        Translación intersemiótica: del lenguaje poético al color, la luz y la interacción táctil.
-      </p>
+      <p>Translación intersemiótica: del lenguaje poético al color, la luz y la interacción táctil.</p>
 
       <div class="section-label">Selecciona un poema</div>
 
@@ -62,9 +59,7 @@
   <!-- POEMA -->
   <section id="poemaScreen" class="screen">
     <div class="inner">
-
       <button id="backBtn" class="back-btn">← Volver</button>
-
       <h2 id="poemTitle"></h2>
       <p class="poem-meta" id="poemMeta"></p>
 
@@ -73,30 +68,35 @@
       </div>
 
       <p class="hint">Toca o desliza para modificar la atmósfera visual del poema.</p>
-
     </div>
   </section>
-  <!-- Firebase (Realtime Database) -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyDVH4W7kseTqX5-qdh5agiffdd1dvAEdjI",
-    authDomain: "poemas-realtime.firebaseapp.com",
-    databaseURL: "https://poemas-realtime-default-rtdb.firebaseio.com",
-    projectId: "poemas-realtime",
-    storageBucket: "poemas-realtime.firebasestorage.app",
-    messagingSenderId: "575529373256",
-    appId: "1:575529373256:web:608837f84243ce459f927d"
-  };
 
-  // Inicializar app y base de datos
-  window.firebaseApp = initializeApp(firebaseConfig);
-  window.db = getDatabase(firebaseApp);
-  window.roomRef = ref(window.db, "salaGlobal/fondo");
-</script>
+  <!-- Firebase inicializado como módulo global -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDVH4W7kseTqX5-qdh5agiffdd1dvAEdjI",
+      authDomain: "poemas-realtime.firebaseapp.com",
+      databaseURL: "https://poemas-realtime-default-rtdb.firebaseio.com",
+      projectId: "poemas-realtime",
+      storageBucket: "poemas-realtime.appspot.com",
+      messagingSenderId: "575529373256",
+      appId: "1:575529373256:web:608837f84243ce459f927d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    window.firebaseSet = set;
+    window.firebaseOnValue = onValue;
+    window.roomRef = ref(db, "salaGlobal/fondo");
+  </script>
+
 
   <script src="scripts/app.js"></script>
+
 </body>
 </html>
