@@ -1,4 +1,3 @@
-// Poemas completos + paletas visuales
 const poemas = {
   becquer: {
     titulo: "Rima XXI",
@@ -96,7 +95,6 @@ o perderse en el viento sobre el trueno del mar!`,
   }
 };
 
-// Elementos del DOM
 const home = document.getElementById("homeScreen");
 const poemaScreen = document.getElementById("poemaScreen");
 const dynamicBg = document.getElementById("dynamicBg");
@@ -139,7 +137,7 @@ function volverHome() {
   dynamicBg.style.background = "transparent";
 }
 
-// Fondo dinámico según interacción
+// Fondo dinámico
 function actualizarFondo(relX, relY) {
   if (!poemaActual) return;
 
@@ -147,26 +145,31 @@ function actualizarFondo(relX, relY) {
   const idx1 = Math.floor(relX * (paleta.length - 1));
   const idx2 = Math.floor(relY * (paleta.length - 1));
 
-  const c1 = paleta[idx1];
-  const c2 = paleta[idx2];
-
-  dynamicBg.style.background =
-    `radial-gradient(circle at ${relX * 100}% ${relY * 100}%, ${c2}, ${c1} 60%)`;
+  dynamicBg.style.background = `
+    radial-gradient(circle at ${relX * 100}% ${relY * 100}%, 
+    ${paleta[idx2]}, ${paleta[idx1]} 60%)
+  `;
 }
 
-// Eventos táctiles
+// Evitar refresh al deslizar
+document.addEventListener("touchmove", e => {
+  if (poemaActual) e.preventDefault();
+}, { passive: false });
+
+// Interacción táctil global
 document.addEventListener("touchstart", e => {
   if (!poemaActual) return;
   const t = e.touches[0];
   manejarInteraccion(t.clientX, t.clientY);
-}, { passive: true });
+});
 
 document.addEventListener("touchmove", e => {
   if (!poemaActual) return;
   const t = e.touches[0];
   manejarInteraccion(t.clientX, t.clientY);
-}, { passive: true });
+});
 
+// Click para PC
 document.addEventListener("click", e => {
   if (!poemaActual) return;
   manejarInteraccion(e.clientX, e.clientY);
