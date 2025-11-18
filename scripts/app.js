@@ -155,18 +155,20 @@ function actualizarFondo(relX, relY) {
 }
 
 // Eventos táctiles
-poemaScreen.addEventListener("touchstart", e => {
+document.addEventListener("touchstart", e => {
+  if (!poemaActual) return;
   const t = e.touches[0];
   manejarInteraccion(t.clientX, t.clientY);
-});
+}, { passive: true });
 
-poemaScreen.addEventListener("touchmove", e => {
+document.addEventListener("touchmove", e => {
+  if (!poemaActual) return;
   const t = e.touches[0];
   manejarInteraccion(t.clientX, t.clientY);
-});
+}, { passive: true });
 
-// Eventos click (por si abres en PC)
-poemaScreen.addEventListener("click", e => {
+document.addEventListener("click", e => {
+  if (!poemaActual) return;
   manejarInteraccion(e.clientX, e.clientY);
 });
 
